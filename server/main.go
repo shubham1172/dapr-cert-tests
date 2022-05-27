@@ -15,7 +15,7 @@ func main() {
 		Addr:    ":8080",
 		Handler: handler,
 		TLSConfig: &tls.Config{
-			ClientAuth: tls.RequireAndVerifyClientCert,
+			ClientAuth: tls.RequestClientCert,
 		},
 	}
 	log.Fatal(server.ListenAndServeTLS("cert.pem", "key.pem"))
