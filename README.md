@@ -12,7 +12,7 @@ make run-server
 ### Run Dapr
 
 ```sh
-pip3 install -r requirements.txt
+pip3 install -r app/requirements.txt
 make run-app
 ```
 
@@ -52,11 +52,25 @@ This time it works!!
 #### Preparation
 Golang server hosted on an Azure VM with a public IP.
 
-Create dapr images from my branch: shubham1172:shubham1172/add-volume-mount-support
+Create dapr images from the branch: shubham1172:shubham1172/add-volume-mount-support
 ```sh
 export DAPR_REGISTRY=docker.io/shubham1172
 export DAPR_TAG=certtests
 make build-linux
 make docker-build
 make docker-push
+```
+
+K8s cluster created with AKS.
+```sh
+az aks get-credentials -n mydapr -g dapr-cert-test
+make create-test-namespace
+make docker-deploy-k8s
+```
+
+Install app on the k8s cluster.
+```sh
+make push-app-image
+kubectl apply -f components/k8s/bindings.http.yaml
+kubectl apply -f deploy/python.yaml
 ```
