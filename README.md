@@ -46,3 +46,17 @@ dapr run --app-id myapp --components-path ./components cmd /c "python3 app/main.
 ```
 
 This time it works!!
+
+### Testing on Kubernetes
+
+#### Preparation
+Golang server hosted on an Azure VM with a public IP.
+
+Create dapr images from my branch: shubham1172:shubham1172/add-volume-mount-support
+```sh
+export DAPR_REGISTRY=docker.io/shubham1172
+export DAPR_TAG=certtests
+make build-linux
+make docker-build
+make docker-push
+```

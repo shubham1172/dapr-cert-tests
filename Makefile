@@ -16,4 +16,4 @@ clean:
 	rm -rf ${BINARY_DIR}
 
 run-app:
-	dapr run --app-id myapp --components-path ./components python3 app/main.py
+	dapr run --app-id myapp --components-path ./components/local python3 app/main.py

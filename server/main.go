@@ -12,7 +12,7 @@ func main() {
 	})
 
 	server := &http.Server{
-		Addr:    ":8080",
+		Addr:    ":443",
 		Handler: handler,
 		TLSConfig: &tls.Config{
 			ClientAuth: tls.RequestClientCert,
