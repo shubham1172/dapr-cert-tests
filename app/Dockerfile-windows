@@ -1,0 +1,8 @@
+FROM ghcr.io/dapr/windows-python-base:1809
+
+WORKDIR /app
+COPY . . 
+
+RUN pip install -r requirements.txt
+ENTRYPOINT ["python"]
+CMD ["main.py"]

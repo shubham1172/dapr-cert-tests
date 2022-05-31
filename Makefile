@@ -2,7 +2,7 @@ SERVER_BINARY_NAME=server
 BINARY_DIR=bin
 
 gencerts:
-	openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out cert.pem -config openssl.conf -addext "subjectAltName = IP:20.219.10.119"
+	openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out cert.pem -config openssl.conf -addext "subjectAltName = IP:20.219.143.173"
 
 build-server:
 	mkdir -p ${BINARY_DIR}
@@ -17,9 +17,11 @@ clean:
 
 build-app-image:
 	docker build -t shubham1172/dapr-python-app:latest -f app/Dockerfile app/
+	docker build -t shubham1172/dapr-python-app:windows -f app/Dockerfile-windows app/
 
 push-app-image: build-app-image
 	docker push shubham1172/dapr-python-app:latest
+	docker push shubham1172/dapr-python-app:windows
 
 run-app:
 	dapr run --app-id myapp --components-path ./components/local python3 app/main.py

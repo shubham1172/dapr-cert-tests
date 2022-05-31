@@ -110,3 +110,64 @@ INFO:root:Response: b'Hello, World!'
 INFO:root:Response: b'Hello, World!'
 INFO:root:Response: b'Hello, World!'
 ```
+
+### Testing on Kubernetes (Windows)
+
+#### Preparation
+Golang server hosted on an Azure VM with a public IP.
+Create a AKS cluster with Windows containers: https://docs.microsoft.com/en-us/azure/aks/learn/quick-windows-container-deploy-cli
+
+```ps1
+az aks create `
+--resource-group dapr-cert-test `
+--name mydaprwin `
+--node-count 2 `
+--enable-addons monitoring `
+--generate-ssh-keys `
+--windows-admin-username shubhash `
+--vm-set-type VirtualMachineScaleSets `
+--kubernetes-version 1.23.5 `
+--network-plugin azure
+
+# Add a Windows nodepool
+az aks nodepool add `
+--resource-group dapr-cert-test `
+--cluster-name mydaprwin `
+--os-type Windows `
+--name npwin `
+--node-count 1
+```
+
+Note, System NodePool can only be Linux, so the original Linux nodepool can't be deleted.
+
+Create dapr images from the branch: shubham1172/configure-custom-certs-support-windows
+```ps1
+$ENV:DAPR_REGISTRY="docker.io/shubham1172"
+$ENV:DAPR_TAG="certtestswin"
+$ENV:TARGET_OS="windows"
+make build
+make docker-build
+make docker-push
+```
+
+K8s cluster created with AKS.
+```sh
+az aks get-credentials -n mydaprwin -g dapr-cert-test
+make create-test-namespace
+
+# Before deploying, edit the Dapr Makefile temporarily 
+# and add `--set global.nodeSelector."kubernetes\\.io/os"=windows`
+# as a parameter in docker-deploy-k8s step.
+# This will install Dapr on the Windows nodepool.
+make docker-deploy-k8s
+```
+
+Install app on the k8s cluster.
+```sh
+make push-app-image
+kubectl apply -f components/k8s/bindings.http.yaml
+kubectl apply -f deploy/python-win.yaml
+```
+
+#### Without the fix
+#### With the fix
