@@ -170,4 +170,25 @@ kubectl apply -f deploy/python-win.yaml
 ```
 
 #### Without the fix
+```python
+Traceback (most recent call last):
+  File "main.py", line 12, in <module>
+    resp = client.invoke_binding(BINDING_NAME, BINDING_OPERATION, '')
+  File "C:\Python\Lib\site-packages\dapr\clients\grpc\client.py", line 308, in invoke_binding
+    response, call = self._stub.InvokeBinding.with_call(req, metadata=metadata)
+  File "C:\Python\Lib\site-packages\grpc\_channel.py", line 957, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+  File "C:\Python\Lib\site-packages\grpc\_channel.py", line 849, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+        status = StatusCode.INTERNAL
+        details = "error when invoke output binding helloworld: Get "https://20.219.143.173/": x509: certificate signed by unknown authority"
+        debug_error_string = "{"created":"@1654013428.615000000","description":"Error received from peer ipv4:127.0.0.1:50001","file":"src/core/lib/surface/call.cc","file_line":953,"grpc_message":"error when invoke output binding helloworld: Get "https://20.219.143.173/": x509: certificate signed by unknown authority","grpc_status":13}"
+```
+
 #### With the fix
+
+```ps1
+kubectl create secret generic https-cert --from-file ./cert.pem
+kubectl apply -f deploy/python-win-withfix.yaml # contains volume mount and environment variable
+```

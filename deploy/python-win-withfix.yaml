@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: python
-        image: docker.io/shubham1172/dapr-python-app:latest
+        image: docker.io/shubham1172/dapr-python-app:windows
         resources:
           limits:
             cpu: "0.5"
