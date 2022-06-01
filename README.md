@@ -192,3 +192,13 @@ grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
 kubectl create secret generic https-cert2 --from-file ./cert.pem
 kubectl apply -f deploy/python-win-withfix.yaml # contains volume mount and environment variable
 ```
+
+```log
+at 20:00❯ kubectl logs pythonapp-c658594c5-zlwhp -c python
+INFO:root:Response: b'Hello, World!'
+INFO:root:Response: b'Hello, World!'
+INFO:root:Response: b'Hello, World!'
+INFO:root:Response: b'Hello, World!'
+INFO:root:Response: b'Hello, World!'
+INFO:root:Response: b'Hello, World!'
+```
