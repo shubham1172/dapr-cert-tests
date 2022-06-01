@@ -30,6 +30,6 @@ spec:
       volumes:
         - name: cert-volume
           secret:
-            secretName: https-cert
+            secretName: https-cert2
       nodeSelector:
         kubernetes.io/os: windows
