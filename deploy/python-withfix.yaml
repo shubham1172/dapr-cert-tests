@@ -31,3 +31,5 @@ spec:
         - name: cert-volume
           secret:
             secretName: https-cert
+      nodeSelector:
+        kubernetes.io/os: linux
