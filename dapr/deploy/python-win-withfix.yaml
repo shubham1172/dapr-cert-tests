@@ -21,15 +21,15 @@ spec:
         dapr.io/env: "SSL_CERT_DIR=/tmp/certs"
     spec:
       containers:
-      - name: python
-        image: docker.io/shubham1172/dapr-python-app:windows
-        resources:
-          limits:
-            cpu: "0.5"
-            memory: "1Gi"
+        - name: python
+          image: docker.io/shubham1172/dapr-python-app:windows
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "1Gi"
       volumes:
         - name: cert-volume
           secret:
-            secretName: https-cert2
+            secretName: https-cert
       nodeSelector:
         kubernetes.io/os: windows

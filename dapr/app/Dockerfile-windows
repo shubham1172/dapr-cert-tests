@@ -1,4 +1,4 @@
-FROM ghcr.io/dapr/windows-python-base:1809
+FROM ghcr.io/shubham1172/windows-python-base:ltsc2022
 
 WORKDIR /app
 COPY . . 

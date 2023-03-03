@@ -6,5 +6,5 @@ spec:
   type: bindings.http
   version: v1
   metadata:
-  - name: url
-    value: https://20.219.2.10
+    - name: url
+      value: https://52.172.238.33
